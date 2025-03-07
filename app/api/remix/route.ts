@@ -3,7 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 
 export async function POST(request: Request) {
   try {
-    const { content } = await request.json();
+    const { content, prompt } = await request.json();
 
     const anthropic = new Anthropic({
       apiKey: process.env.CLAUDE_API_KEY!
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       max_tokens: 300,
       messages: [{
         role: 'user',
-        content: `Transform the following content into a tweet (280 characters or less) while maintaining the same voice and tone: "${content}"`
+        content: `${prompt} "${content}"`
       }]
     });
 
